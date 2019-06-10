@@ -5,9 +5,13 @@ import * as Constants from '../Constants';
 
 class ArticleListView extends React.Component {
 
-    state = {
-      articles: []
-    };
+    constructor(props) {
+        super(props);
+        this.state = {
+            articles: [],
+        };
+    }
+
 
     componentDidMount() {
         // called whenever this component is mounted.
@@ -23,10 +27,26 @@ class ArticleListView extends React.Component {
             });
     }
 
+    deleteArticle(articleId) {
+        if(window.confirm("Are you sure?")) {
+            axios.delete(`${Constants.DELETE_API_URL}${articleId}`)
+                .then(res => {
+                    console.log("deleted article!");
+                    window.location.reload();
+                })
+                .catch(err => {
+                    console.log("cannot delete");
+                    console.log(err);
+                })
+        }
+    }
+
     render() {
         return (
-            <Articles data={this.state.articles}/>
+            <Articles data={this.state.articles} deleteArticle={this.deleteArticle}/>
         );
     }
+
+
 }
 export default ArticleListView;
