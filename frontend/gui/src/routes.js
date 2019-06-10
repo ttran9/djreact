@@ -8,7 +8,7 @@ import ArticleCreateUpdateView from './containers/ArticleCreateUpdateView';
 
 const BaseRouter = () => (
     <div>
-        <Switch>
+         <Switch>
             <Route exact path='/create' component={ArticleCreateUpdateView}/>
             <Route exact path='/' component={ArticleListView}/>
             <Route exact path='/:articleID' component={ArticleDetailView}/>
