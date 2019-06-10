@@ -2,8 +2,8 @@
 frontend/gui/node_modules
 
 # sqlite3
-backend/db.sqlite3
-backend/*.sqlite3
+backend/src/db.sqlite3
+backend/src/*.sqlite3
 
 # User-specific stuff
 .idea/**/workspace.xml
