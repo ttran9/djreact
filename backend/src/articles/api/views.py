@@ -1,4 +1,4 @@
-from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView, UpdateAPIView
+from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView, UpdateAPIView, DestroyAPIView
 
 from articles.models import Article
 from .serializers import ArticleSerializer
@@ -22,3 +22,11 @@ class ArticleCreateView(CreateAPIView):
 class ArticleUpdateView(UpdateAPIView):
     queryset = Article.objects.all()
     serializer_class = ArticleSerializer
+
+
+class ArticleDeleteView(DestroyAPIView):
+    serializer_class = ArticleSerializer
+
+    def get_queryset(self):
+        queryset = Article.objects.filter(id=self.kwargs['pk'])
+        return queryset
