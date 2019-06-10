@@ -1,14 +1,17 @@
 import React from 'react';
 import axios from 'axios';
 
-import {Card, Col, Row} from 'antd';
+import {Button, Card, Col, Row} from 'antd';
 import * as Constants from '../Constants';
 
 class ArticleDetailView extends React.Component {
 
-    state = {
-      article: {}
-    };
+    constructor(props) {
+        super(props);
+        this.state = {
+            article: {}
+        };
+    }
 
     componentDidMount() {
         const articleId = this.props.match.params.articleID;
@@ -25,6 +28,20 @@ class ArticleDetailView extends React.Component {
             });
     }
 
+    deleteArticle(articleId) {
+        if(window.confirm("Are you sure?")) {
+            axios.delete(`${Constants.DELETE_API_URL}${articleId}`)
+                .then(res => {
+                    console.log("deleted article!");
+                    this.props.history.push(`/`);
+                })
+                .catch(err => {
+                    console.log("cannot delete");
+                    console.log(err);
+                })
+        }
+    }
+
     render() {
         let article = this.state.article;
         return (
@@ -38,7 +55,7 @@ class ArticleDetailView extends React.Component {
                         </div>
                       </Col>
                       <Col className="gutter-row" span={6}>
-                        <div className="gutter-box">DELETE (TBA)</div>
+                          <Button type="link" onClick={() => {this.deleteArticle(article.id)}}>delete</Button>
                       </Col>
                     </Row>
                 </div>
