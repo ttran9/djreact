@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 
-import {Card, Col, List, Row} from 'antd';
+import {Card, Col, Row} from 'antd';
 import * as Constants from '../Constants';
 
 class ArticleDetailView extends React.Component {
@@ -23,10 +23,6 @@ class ArticleDetailView extends React.Component {
                 console.log("INSIDE DETAIL VIEW ERROR!!");
                 console.log(err);
             });
-    }
-
-    updateItem(articleId) {
-        console.log("you clicked on the article number: " + articleId);
     }
 
     render() {
