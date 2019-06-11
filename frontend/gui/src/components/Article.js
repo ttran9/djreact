@@ -1,5 +1,5 @@
 import React from 'react';
-import {List, Icon, Row, Col, Button} from 'antd';
+import {List, Icon } from 'antd';
 
 const IconText = ({ type, text }) => (
   <span>
@@ -42,19 +42,7 @@ class Articles extends React.Component {
                   title={<a href={`/${item.id}`}>{item.title}</a>}
                   description={item.description}
                 />
-                    <p>{item.content}</p>
-                    <div>
-                        <Row gutter={16}>
-                          <Col className="gutter-row" span={6}>
-                            <div className="gutter-box">
-                                <a href={`/update/${item.id}`}>update</a>
-                            </div>
-                          </Col>
-                          <Col className="gutter-row" span={6}>
-                              <Button type="link" onClick={() => {this.props.deleteArticle(item.id)}}>delete</Button>
-                          </Col>
-                        </Row>
-                    </div>
+                <p>{item.content}</p>
               </List.Item>
             )}
         />
