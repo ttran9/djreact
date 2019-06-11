@@ -23,7 +23,6 @@ const CustomLayout = (props) => {
           <Breadcrumb style={{ margin: '16px 0' }}>
               <Breadcrumb.Item><Link to="/">Home</Link></Breadcrumb.Item>
               <Breadcrumb.Item><Link to="/">List</Link></Breadcrumb.Item>
-              <Breadcrumb.Item><Link to="/create">Create Article</Link></Breadcrumb.Item>
           </Breadcrumb>
           <div style={{ background: '#fff', padding: 24, minHeight: 280 }}>
               {props.children}
