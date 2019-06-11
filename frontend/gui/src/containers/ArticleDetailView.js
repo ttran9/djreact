@@ -1,8 +1,9 @@
 import React from 'react';
 import axios from 'axios';
 
-import {Button, Card, Col, Row} from 'antd';
+import {Button, Card} from 'antd';
 import * as Constants from '../Constants';
+import CustomForm from '../components/CustomForm';
 
 class ArticleDetailView extends React.Component {
 
@@ -28,38 +29,29 @@ class ArticleDetailView extends React.Component {
             });
     }
 
-    deleteArticle(articleId) {
-        if(window.confirm("Are you sure?")) {
-            axios.delete(`${Constants.DELETE_API_URL}${articleId}`)
-                .then(res => {
-                    console.log("deleted article!");
-                    this.props.history.push(`/`);
-                })
-                .catch(err => {
-                    console.log("cannot delete");
-                    console.log(err);
-                })
-        }
-    }
+    handleDelete = () => {
+        const articleId = this.props.match.params.articleID;
+        axios.delete(`${Constants.BASE_API_URL}${articleId}/`);
+        this.props.history.push("/");
+        this.forceUpdate();
+    };
 
     render() {
         let article = this.state.article;
         return (
-            <Card title={article.title}>
-                <p>{article.content}</p>
-                <div>
-                    <Row gutter={16}>
-                      <Col className="gutter-row" span={6}>
-                        <div className="gutter-box">
-                            <a href={`/update/${article.id}`}>update</a>
-                        </div>
-                      </Col>
-                      <Col className="gutter-row" span={6}>
-                          <Button type="link" onClick={() => {this.deleteArticle(article.id)}}>delete</Button>
-                      </Col>
-                    </Row>
-                </div>
-            </Card>
+            <div>
+                <Card title={article.title}>
+                    <h2>{article.description}</h2>
+                    <p>{article.content}</p>
+                </Card>
+                <CustomForm
+                    requestType="put"
+                    articleID={this.props.match.params.articleID}
+                    btnText="Update"/>
+                <form onSubmit={this.handleDelete}>
+                    <Button type="danger" htmlType="submit">Delete</Button>
+                </form>
+            </div>
         );
     }
 }
