@@ -10,4 +10,14 @@
         - My initial solution for the update is not ideal because I had to create another component which is very similar
         the ArticleCreateView except it sends a put request instead of a post request.
         - My initial deletion solution does not require for the user to be logged in and to be the owener of the article.
-        I will work towards resolving this issue with a later upload. 
+        I will work towards resolving this issue with a later upload.
+        
+        
+# Video 3 Notes
+    - The store directory is something react redux uses to maintain the state for the entire application.
+        - Store is broken into two parts
+            - actions
+                - Something we want to define that takes place.
+                    - login, logout, etc.
+            - reducers            
+                - Takes the state and returns only a piece that is required.
