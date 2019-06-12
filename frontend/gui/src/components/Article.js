@@ -39,7 +39,7 @@ class Articles extends React.Component {
                 }
               >
                 <List.Item.Meta
-                  title={<a href={`/${item.id}`}>{item.title}</a>}
+                  title={<a href={`/articles/${item.id}`}>{item.title}</a>}
                   description={item.description}
                 />
                 <p>{item.content}</p>
