@@ -3,7 +3,7 @@ import axios from 'axios';
 import Articles from '../components/Article';
 import * as Constants from '../Constants';
 import CustomForm from '../components/CustomForm';
-
+import { connect } from 'react-redux';
 class ArticleListView extends React.Component {
 
     constructor(props) {
@@ -13,8 +13,14 @@ class ArticleListView extends React.Component {
         };
     }
 
-    componentDidMount() {
-        // called whenever this component is mounted.
+    componentWillReceiveProps(newProps) {
+        console.log(newProps);
+        if(newProps.token) {
+            axios.defaults.headers = {
+                "Content-Type": "application/json",
+                Authorization: `Token ${newProps.token}`
+            }
+        }
         axios.get(`${Constants.BASE_API_URL}`)
             .then(res => {
                 this.setState({
@@ -42,4 +48,11 @@ class ArticleListView extends React.Component {
 
 
 }
-export default ArticleListView;
+
+const mapStateToProps = state => {
+    return {
+        token: state.token
+    }
+}
+
+export default connect(mapStateToProps)(ArticleListView);

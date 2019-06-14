@@ -4,6 +4,7 @@ import axios from 'axios';
 import {Button, Card} from 'antd';
 import * as Constants from '../Constants';
 import CustomForm from '../components/CustomForm';
+import { connect } from "react-redux";
 
 class ArticleDetailView extends React.Component {
 
@@ -14,10 +15,18 @@ class ArticleDetailView extends React.Component {
         };
     }
 
-    componentDidMount() {
+    componentWillReceiveProps(newProps) {
+        console.log(newProps);
+        if(newProps.token) {
+            axios.defaults.headers = {
+                "Content-Type": "application/json",
+                Authorization: `Token ${newProps.token}`
+            }
+        }
         const articleId = this.props.match.params.articleID;
+        console.log(articleId);
         // called whenever this component is mounted.
-        axios.get(`${Constants.BASE_API_URL}${articleId}`)
+        axios.get(`${Constants.BASE_API_URL}${articleId}/`)
             .then(res => {
                 this.setState({
                     article: res.data
@@ -29,11 +38,20 @@ class ArticleDetailView extends React.Component {
             });
     }
 
-    handleDelete = () => {
-        const articleId = this.props.match.params.articleID;
-        axios.delete(`${Constants.BASE_API_URL}${articleId}/`);
-        this.props.history.push("/");
-        this.forceUpdate();
+
+    handleDelete = (event) => {
+        if(this.props.token !== null) {
+            const articleId = this.props.match.params.articleID;
+            axios.defaults.headers = {
+                "Content-Type": "application/json",
+                Authorization: `Token ${this.props.token}`
+            }
+            axios.delete(`${Constants.BASE_API_URL}${articleId}/`);
+            this.props.history.push("/");
+            this.forceUpdate();
+        } else {
+            console.log('the article cannot be loaded..');
+        }
     };
 
     render() {
@@ -55,4 +73,11 @@ class ArticleDetailView extends React.Component {
         );
     }
 }
-export default ArticleDetailView;
+
+const mapStateToProps = state => {
+    return {
+        token: state.token
+    }
+}
+
+export default connect(mapStateToProps)(ArticleDetailView);
